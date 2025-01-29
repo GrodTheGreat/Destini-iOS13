@@ -15,23 +15,23 @@ class ViewController: UIViewController {
     @IBOutlet weak var choice2Button: UIButton!
     
     
-    
+    var storyBrain = StoryBrain();
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        updateUI(storyState);
+        updateUI(storyBrain.storyState);
     }
     
     func updateUI(_ storyIndex: Int) {
-        storyLabel.text = stories[storyIndex].title;
+        storyLabel.text = storyBrain.stories[storyIndex].title;
         choice1Button.setTitle(
-            stories[storyIndex].choice1,
+            storyBrain.stories[storyIndex].choice1,
             for: .normal
         );
         choice2Button.setTitle(
-            stories[storyIndex].choice2,
+            storyBrain.stories[storyIndex].choice2,
             for: .normal
         );
     }
@@ -39,13 +39,8 @@ class ViewController: UIViewController {
     @IBAction func choiceMade(_ sender: UIButton) {
         let userChoice: String = sender.titleLabel!.text!;
         
-        if userChoice == stories[0].choice1 {
-            storyState = 1;
-        } else if userChoice == stories[0].choice2 {
-            storyState = 2;
-        }
-        
-        updateUI(storyState);
+        storyBrain.nextStory(userChoice);
+        updateUI(storyBrain.storyState);
     }
     
 }
